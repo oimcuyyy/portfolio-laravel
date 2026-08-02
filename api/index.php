@@ -1,6 +1,6 @@
 <?php
 
-// 1. Buat direktori sementara di /tmp untuk Vercel
+// 1. Buat folder temporary di /tmp untuk Vercel
 $storageDirs = [
     '/tmp/storage/app/public',
     '/tmp/storage/framework/views',
@@ -16,16 +16,9 @@ foreach ($storageDirs as $dir) {
     }
 }
 
-// 2. Load Composer Autoloader
-require __DIR__ . '/../vendor/autoload.php';
+// 2. Set variabel environment storage ke /tmp
+putenv('APP_STORAGE_PATH=/tmp/storage');
+putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
 
-// 3. Load Application Laravel
-$app = require_once __DIR__ . '/../bootstrap/app.php';
-
-// 4. Set storage path ke /tmp
-$app->useStoragePath('/tmp/storage');
-
-// 5. Jalankan Aplikasi
-$request = Illuminate\Http\Request::capture();
-$response = $app->handleRequest($request);
-$response->send();
+// 3. Forward request ke index.php bawaan Laravel
+require __DIR__ . '/../public/index.php';
