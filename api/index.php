@@ -1,6 +1,6 @@
 <?php
 
-// 1. Buat folder temporary wajib di /tmp
+// Buat folder storage di /tmp jika belum ada
 $dirs = [
     '/tmp/storage/app/public',
     '/tmp/storage/framework/views',
@@ -16,12 +16,5 @@ foreach ($dirs as $dir) {
     }
 }
 
-// 2. Paksa Laravel menggunakan /tmp untuk Storage & Compiled Views
-putenv('APP_STORAGE_PATH=/tmp/storage');
-$_ENV['APP_STORAGE_PATH'] = '/tmp/storage';
-
-putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
-$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
-
-// 3. Jalankan aplikasi Laravel
+// Forward ke index public
 require __DIR__ . '/../public/index.php';
