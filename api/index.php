@@ -41,6 +41,10 @@ require __DIR__ . '/../vendor/autoload.php';
 // 5. Bootstrapping Laravel Application
 $app = require_once __DIR__ . '/../bootstrap/app.php';
 
+// Jalankan otomatis migrasi agar tabel database tercipta di /tmp
+$kernelConsole = $app->make(Illuminate\Contracts\Console\Kernel::class);
+$kernelConsole->call('migrate', ['--force' => true]);
+
 // 6. Handle Request
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
