@@ -1,6 +1,6 @@
 <?php
 
-// 1. Buat folder temporary wajib Vercel Serverless
+// 1. Buat folder temporary wajib di /tmp
 $dirs = [
     '/tmp/storage/app/public',
     '/tmp/storage/framework/views',
@@ -16,5 +16,12 @@ foreach ($dirs as $dir) {
     }
 }
 
-// 2. Forward ke index public Laravel
+// 2. Paksa Laravel menggunakan /tmp untuk Storage & Compiled Views
+putenv('APP_STORAGE_PATH=/tmp/storage');
+$_ENV['APP_STORAGE_PATH'] = '/tmp/storage';
+
+putenv('VIEW_COMPILED_PATH=/tmp/storage/framework/views');
+$_ENV['VIEW_COMPILED_PATH'] = '/tmp/storage/framework/views';
+
+// 3. Jalankan aplikasi Laravel
 require __DIR__ . '/../public/index.php';
