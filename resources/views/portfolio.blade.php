@@ -40,20 +40,32 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
                     <!-- Icon Bulan (Light Mode) -->
-                    <svg x-show="!darkMode" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
+                    <svg x-show="!darkMode" class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display: none;">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
 
+                <!-- Dynamic Auth Buttons -->
                 @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-500/20">
-                            Dashboard Admin
+                        <!-- Jika SUDAH Login -->
+                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-500/20 hover:scale-105">
+                            {{ Auth::user()->is_admin ? 'Dashboard Admin' : 'Dashboard' }}
+                        </a>
+                        <!-- Button Logout -->
+                        <a href="{{ url('/logout') }}" class="px-4 py-2.5 rounded-xl bg-rose-600/10 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-500/20 font-semibold text-sm transition-all">
+                            Logout
                         </a>
                     @else
+                        <!-- Jika BELUM Login -->
                         <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-500/20 hover:scale-105 inline-block">
-                            Login Admin
+                            Login
                         </a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all border border-slate-300 dark:border-slate-700/60 inline-block">
+                                Register
+                            </a>
+                        @endif
                     @endauth
                 @endif
             </div>
@@ -227,7 +239,7 @@
                     </div>
                 </div>
             @empty
-                <!-- Standby Card Jika Belum Ada Project Di-input -->
+                <!-- Standby Card Jika Belum Ada Project -->
                 <div id="projects" class="md:col-span-2 p-5 rounded-3xl bg-white dark:bg-slate-900/80 border border-dashed border-slate-300 dark:border-slate-800 shadow-sm flex items-center justify-center text-center">
                     <div>
                         <p class="text-xs font-semibold text-slate-500 dark:text-slate-400">Belum ada project yang ditambahkan.</p>
@@ -235,6 +247,81 @@
                     </div>
                 </div>
             @endforelse
+
+            <!-- ================================================================= -->
+            <!-- CARD BARU DI BAGIAN BAWAH DENGAN REAL-TIME CLOCK                  -->
+            <!-- ================================================================= -->
+
+            <!-- 7. Location & Real-Time Clock Card (1 Col x 1 Row) -->
+            <div class="p-5 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm flex flex-col justify-between hover:border-indigo-500/40 transition-all group overflow-hidden relative"
+                 x-data="{ time: '' }"
+                 x-init="
+                    const updateClock = () => {
+                        const now = new Date();
+                        time = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'Asia/Jakarta' }).replace(/\./g, ':');
+                    };
+                    updateClock();
+                    setInterval(updateClock, 1000);
+                 ">
+                <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Location</span>
+                    <span class="text-xs">🇮🇩</span>
+                </div>
+
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span>Petukangan Selatan, Jakarta</span>
+                    </h3>
+                    <!-- Jam Real-Time Berdetak -->
+                    <p class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 mt-1 flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 animate-spin" style="animation-duration: 8s;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span x-text="time || '00:00:00'"></span>
+                        <span class="text-[10px] font-normal text-slate-500 dark:text-slate-400 font-sans">(WIB)</span>
+                    </p>
+                </div>
+
+                <div class="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    <span>Ready to collaborate</span>
+                </div>
+            </div>
+
+            <!-- 8. Quick Stats Card (1 Col x 1 Row) -->
+            <div class="p-5 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm flex flex-col justify-between hover:border-indigo-500/40 transition-all">
+                <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Highlights</span>
+                <div class="grid grid-cols-2 gap-2 my-auto">
+                    <div>
+                        <span class="text-xl font-extrabold text-slate-900 dark:text-white">100%</span>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Dedikasi Kode</p>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold text-indigo-600 dark:text-indigo-400">Laravel</span>
+                        <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Main Focus</p>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-400">Selalu update teknologi web terkini.</p>
+            </div>
+
+            <!-- 9. Contact Me CTA Card (2 Col x 1 Row) -->
+            <div class="md:col-span-2 p-6 rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg shadow-indigo-600/15 flex items-center justify-between gap-4 hover:scale-[1.01] transition-transform">
+                <div>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-indigo-200">Let's Connect</span>
+                    <h3 class="text-lg font-extrabold mt-0.5">Tertarik Berkolaborasi?</h3>
+                    <p class="text-xs text-indigo-100/80 mt-1 max-w-sm">
+                        Terbuka untuk tawaran project freelance, magang, atau sekadar diskusi seputar web dev.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 shrink-0">
+                    <a href="https://wa.me/6285173050026" target="_blank" class="px-4 py-2.5 rounded-xl bg-white text-indigo-900 font-bold text-xs hover:bg-indigo-50 transition-colors text-center shadow-md">
+                        WhatsApp 💬
+                    </a>
+                    <a href="mailto:gegerochim567@gmail.com" class="px-4 py-2.5 rounded-xl bg-indigo-800/60 hover:bg-indigo-800 text-white border border-indigo-400/30 font-bold text-xs transition-colors text-center">
+                        Email ✉️
+                    </a>
+                </div>
+            </div>
 
         </main>
 

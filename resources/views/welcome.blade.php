@@ -55,12 +55,18 @@
                 </svg>
             </button>
 
-            <!-- Tombol Ke Dashboard Admin / Login -->
+            <!-- Tombol Ke Dashboard Admin / Login (Sudah Diperbaiki) -->
             @if (Route::has('login'))
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                        Dashboard Admin
-                    </a>
+                    @if (Auth::user()->is_admin)
+                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                            Dashboard Admin
+                        </a>
+                    @else
+                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                            Dashboard
+                        </a>
+                    @endif
                 @else
                     <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
                         Log in

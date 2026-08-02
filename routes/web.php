@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Models\Project;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // 1. Halaman Public Portfolio
@@ -11,8 +12,16 @@ Route::get('/', function () {
     return view('portfolio', compact('projects'));
 })->name('portfolio');
 
-// 2. Dashboard Admin & CRUD Projects
-Route::middleware(['auth', 'verified'])->group(function () {
+// Route Logout Sementara via GET (Biar gampang testing logout di browser)
+Route::get('/logout', function () {
+    Auth::logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return redirect('/');
+});
+
+// 2. Dashboard Admin & CRUD Projects (Hanya Admin yang bisa akses)
+Route::middleware(['auth', 'admin', 'verified'])->group(function () {
     Route::get('/dashboard', [ProjectController::class, 'index'])->name('dashboard');
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
