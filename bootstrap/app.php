@@ -15,4 +15,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->booted(function ($app) {
+        // Atur storage path ke /tmp khusus di lingkungan serverless/Vercel
+        if (isset($_ENV['VERCEL']) || env('VERCEL')) {
+            $app->useStoragePath('/tmp/storage');
+        }
+    })
+    ->create();
