@@ -13,7 +13,8 @@
           }
       }"
       x-init="if (darkMode) document.documentElement.classList.add('dark')"
-      :class="{ 'dark': darkMode }">
+      :class="{ 'dark': darkMode }"
+      class="scroll-smooth">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -188,6 +189,21 @@
                 </span>
             </div>
 
+        </div>
+
+        <!-- ROW 3: Projects Section (Target anchor untuk tombol "Lihat Project") -->
+        <div id="projects" class="pt-2">
+            <div class="p-8 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm">
+                <div class="flex items-center justify-between mb-4">
+                    <div>
+                        <span class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider block">Portfolio Showcase</span>
+                        <h3 class="text-xl font-extrabold text-slate-900 dark:text-white mt-1">Daftar Project</h3>
+                    </div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">
+                    Kumpulan project web development dan perancangan antarmuka yang sedang dan telah dikembangkan.
+                </p>
+            </div>
         </div>
 
     </main>
