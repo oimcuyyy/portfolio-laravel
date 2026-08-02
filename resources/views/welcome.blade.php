@@ -23,11 +23,23 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
-    <!-- Alpine.js (Melindungi fungsionalitas Toggle Mode) -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Tailwind CSS Play CDN (Bypass Vercel Build Issue) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['figtree', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 
-    <!-- Scripts & Styles via Vite -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 font-sans antialiased transition-colors duration-300 min-h-screen">
 
@@ -55,7 +67,7 @@
                 </svg>
             </button>
 
-            <!-- Tombol Ke Dashboard Admin / Login (Sudah Diperbaiki) -->
+            <!-- Tombol Ke Dashboard Admin / Login -->
             @if (Route::has('login'))
                 @auth
                     @if (Auth::user()->is_admin)
@@ -109,7 +121,6 @@
             <!-- PHOTO CARD (3 Cols) -->
             <div class="lg:col-span-3 p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm flex flex-col items-center text-center justify-between hover:-translate-y-1 transition-all duration-300">
                 <div class="w-full h-48 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 relative">
-                    <!-- Foto Profil Kamu -->
                     <img src="https://via.placeholder.com/300x300" alt="Muhammad Rochimuloh" class="w-full h-full object-cover">
                 </div>
                 <div class="mt-4">
