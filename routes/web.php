@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Route;
 // 1. Halaman Public Portfolio
 Route::get('/', function () {
     $projects = Project::latest()->get();
-    return view('portfolio', compact('projects'));
+    return view('welcome', compact('projects'));
 })->name('portfolio');
 
-// Route Logout Sementara via GET (Biar gampang testing logout di browser)
+// Route Logout Sementara via GET
 Route::get('/logout', function () {
     Auth::logout();
     request()->session()->invalidate();

@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700,800,900&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind CSS Play CDN (Bypass Vercel Build Issue) -->
+    <!-- Tailwind CSS Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -191,7 +191,7 @@
 
         </div>
 
-        <!-- ROW 3: Projects Section (Target anchor untuk tombol "Lihat Project") -->
+        <!-- ROW 3: Projects Section -->
         <div id="projects" class="pt-2">
             <div class="p-8 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm">
                 <div class="flex items-center justify-between mb-4">
