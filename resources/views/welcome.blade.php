@@ -130,7 +130,7 @@
             <!-- PHOTO CARD (3 Cols) -->
             <div class="lg:col-span-3 p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800/80 shadow-sm flex flex-col items-center text-center justify-between hover:-translate-y-1 transition-all duration-300">
                 <div class="w-full h-48 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 relative">
-                    <img src="https://via.placeholder.com/300x300" alt="Muhammad Rochimuloh" class="w-full h-full object-cover">
+                    <img src="{{ asset('smkn20.jpg') }}" alt="Muhammad Rochimuloh" class="w-full h-full object-cover">
                 </div>
                 <div class="mt-4">
                     <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Developer Profile</span>
