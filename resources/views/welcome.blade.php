@@ -68,24 +68,32 @@
                 </svg>
             </button>
 
-            <!-- Tombol Ke Dashboard Admin / Login -->
-            @if (Route::has('login'))
-                @auth
-                    @if (Auth::user()->is_admin)
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                            Dashboard Admin
-                        </a>
+            <!-- Tombol Ke Dashboard / Login / Register -->
+            <div class="flex items-center gap-2">
+                @if (Route::has('login'))
+                    @auth
+                        @if (Auth::user()->is_admin)
+                            <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                                Dashboard Admin
+                            </a>
+                        @else
+                            <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                                Dashboard
+                            </a>
+                        @endif
                     @else
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                            Dashboard
+                        <a href="{{ route('login') }}" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold text-sm transition-all hover:bg-slate-300 dark:hover:bg-slate-700">
+                            Log in
                         </a>
-                    @endif
-                @else
-                    <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
-                        Log in
-                    </a>
-                @endauth
-            @endif
+
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all duration-300 shadow-lg shadow-indigo-500/25">
+                                Register
+                            </a>
+                        @endif
+                    @endauth
+                @endif
+            </div>
         </div>
     </nav>
 
