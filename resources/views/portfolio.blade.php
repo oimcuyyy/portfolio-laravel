@@ -2,6 +2,7 @@
 <html lang="id"
       x-data="{ darkMode: localStorage.getItem('theme') === 'light' ? false : true }"
       x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))"
+      @keydown.window="if($event.ctrlKey && $event.shiftKey && $event.key.toLowerCase() === 'l') { window.location.href = '{{ Auth::check() ? url('/dashboard') : route('login') }}'; }"
       :class="{ 'dark': darkMode }"
       class="scroll-smooth">
 <head>
@@ -16,15 +17,15 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
     </style>
 </head>
-<body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white antialiased py-8 px-4 sm:px-6 transition-colors duration-300">
+<body class="bg-slate-50 dark:bg-[#090d16] text-slate-800 dark:text-slate-100 min-h-screen selection:bg-indigo-500 selection:text-white antialiased transition-colors duration-300">
 
     <!-- Background Ambient Glow -->
     <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-    <div class="max-w-6xl mx-auto relative z-10">
+    <div class="w-full px-4 sm:px-8 lg:px-12 py-8 mx-auto relative z-10">
 
         <!-- Header / Navbar -->
-        <header class="flex items-center justify-between pb-6 mb-8 border-b border-slate-200 dark:border-slate-800/80 transition-colors">
+        <header class="flex items-center justify-between pb-6 mb-8 border-b border-transparent transition-colors">
             <a href="#" class="text-2xl font-black tracking-tight text-slate-900 dark:text-white hover:opacity-80 transition-opacity">
                 My<span class="text-indigo-600 dark:text-indigo-400">.Portfolio</span>
             </a>
@@ -44,30 +45,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
                     </svg>
                 </button>
-
-                <!-- Dynamic Auth Buttons -->
-                @if (Route::has('login'))
-                    @auth
-                        <!-- Jika SUDAH Login -->
-                        <a href="{{ url('/dashboard') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-500/20 hover:scale-105">
-                            {{ Auth::user()->is_admin ? 'Dashboard Admin' : 'Dashboard' }}
-                        </a>
-                        <!-- Button Logout -->
-                        <a href="{{ url('/logout') }}" class="px-4 py-2.5 rounded-xl bg-rose-600/10 hover:bg-rose-600 text-rose-600 hover:text-white border border-rose-500/20 font-semibold text-sm transition-all">
-                            Logout
-                        </a>
-                    @else
-                        <!-- Jika BELUM Login -->
-                        <a href="{{ route('login') }}" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm transition-all shadow-lg shadow-indigo-500/20 hover:scale-105 inline-block">
-                            Login
-                        </a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="px-4 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm transition-all border border-slate-300 dark:border-slate-700/60 inline-block">
-                                Register
-                            </a>
-                        @endif
-                    @endauth
-                @endif
             </div>
         </header>
 
@@ -97,11 +74,8 @@
                     <a href="#projects" class="px-5 py-2.5 rounded-xl bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 font-bold text-xs transition-all shadow-md">
                         Lihat Project ↓
                     </a>
-                    <a href="https://github.com" target="_blank" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white border border-slate-200 dark:border-slate-700/50 transition-all">
+                    <a href="https://github.com/oimcuyyy" target="_blank" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white border border-slate-200 dark:border-slate-700/50 transition-all">
                         <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                    </a>
-                    <a href="https://linkedin.com" target="_blank" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 dark:hover:bg-indigo-600 text-slate-700 dark:text-slate-300 hover:text-white border border-slate-200 dark:border-slate-700/50 transition-all">
-                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
                 </div>
             </div>
@@ -144,19 +118,19 @@
 
                 <div class="grid grid-cols-2 gap-2 relative z-10">
                     <div class="flex items-center gap-2 p-2 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
-                        <span class="text-base">🔴</span>
+                        <img src="https://cdn.simpleicons.org/laravel/white" class="w-4 h-4" alt="Laravel">
                         <span class="text-xs font-semibold">Laravel 13</span>
                     </div>
                     <div class="flex items-center gap-2 p-2 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
-                        <span class="text-base">🌊</span>
+                        <img src="https://cdn.simpleicons.org/tailwindcss/white" class="w-4 h-4" alt="Tailwind">
                         <span class="text-xs font-semibold">Tailwind</span>
                     </div>
                     <div class="flex items-center gap-2 p-2 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
-                        <span class="text-base">🚀</span>
+                        <img src="https://cdn.simpleicons.org/alpinedotjs/white" class="w-4 h-4" alt="Alpine.js">
                         <span class="text-xs font-semibold">Alpine.js</span>
                     </div>
                     <div class="flex items-center gap-2 p-2 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
-                        <span class="text-base">🗄️</span>
+                        <img src="https://cdn.simpleicons.org/sqlite/white" class="w-4 h-4" alt="SQLite">
                         <span class="text-xs font-semibold">SQLite</span>
                     </div>
                 </div>

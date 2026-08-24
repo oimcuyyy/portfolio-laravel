@@ -14,20 +14,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-        <!-- Tailwind CSS CDN (Bypass Build Error Vercel) -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script>
-            tailwind.config = {
-                darkMode: 'class',
-                theme: {
-                    extend: {
-                        fontFamily: {
-                            sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        }
-                    }
-                }
-            }
-        </script>
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <style>
             body { font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -40,7 +27,7 @@
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800/80 backdrop-blur-md sticky top-0 z-30 transition-colors">
-                    <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
+                    <div class="w-full mx-auto py-4 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
                 </header>

@@ -31,12 +31,19 @@ class ProjectController extends Controller
             'description' => 'required|string',
             'link'        => 'nullable|url',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_url'   => 'nullable|url',
         ]);
 
-        // Simpan gambar jika di-upload
+        // Simpan gambar jika di-upload (prioritas file lokal)
         if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('projects', 'public');
+        } elseif (!empty($validated['image_url'])) {
+            // Jika tidak ada file upload tapi ada link HTTPS, pakai linknya
+            $validated['image'] = $validated['image_url'];
         }
+
+        // Hapus key image_url karena di DB kolomnya cuma 'image'
+        unset($validated['image_url']);
 
         Project::create($validated);
 

@@ -1,6 +1,6 @@
 <nav x-data="{ open: false }" class="bg-white dark:bg-[#090d16] border-b border-slate-200 dark:border-slate-800/80 transition-colors">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex items-center gap-8">
                 <!-- Logo -->

@@ -10,12 +10,23 @@
     </x-slot>
 
     <div class="py-8">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+        <div class="w-full mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
 
             <!-- Flash Message Success -->
             @if (session('success'))
-                <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-2xl flex items-center gap-3 text-sm font-semibold">
+                <div class="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-2xl flex items-center gap-3 text-sm font-semibold mb-4">
                     <span>✨ {{ session('success') }}</span>
+                </div>
+            @endif
+
+            <!-- Flash Message Errors -->
+            @if ($errors->any())
+                <div class="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 rounded-2xl mb-4 text-sm font-semibold">
+                    <ul class="list-disc pl-5">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
                 </div>
             @endif
 
@@ -65,11 +76,26 @@
                         </div>
 
                         <!-- Field Upload Gambar Baru -->
-                        <div>
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Gambar / Thumbnail Project (Opsional)</label>
-                            <input type="file" name="image" accept="image/*"
-                                   class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer">
-                            <p class="text-[10px] text-slate-500 mt-1">Format: JPG, PNG, WEBP (Maks. 2MB)</p>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Upload Gambar Lokal (Opsional)</label>
+                                <input type="file" name="image" accept="image/*"
+                                       class="w-full text-xs text-slate-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500 bg-slate-800/80 rounded-xl border border-slate-700 cursor-pointer">
+                                <p class="text-[10px] text-slate-500 mt-1">Format: JPG, PNG, WEBP (Maks. 2MB)</p>
+                            </div>
+                            
+                            <div class="relative flex items-center py-2">
+                                <div class="flex-grow border-t border-slate-700"></div>
+                                <span class="flex-shrink-0 mx-4 text-slate-500 text-xs font-bold uppercase tracking-wider">ATAU</span>
+                                <div class="flex-grow border-t border-slate-700"></div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">Paste Link Gambar (HTTPS)</label>
+                                <input type="url" name="image_url" placeholder="https://images.unsplash.com/..."
+                                       class="w-full px-4 py-2.5 rounded-xl bg-slate-800/80 border border-slate-700 text-sm text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-500">
+                                <p class="text-[10px] text-slate-500 mt-1">Gunakan link eksternal jika tidak ingin upload file.</p>
+                            </div>
                         </div>
 
                         <div>
